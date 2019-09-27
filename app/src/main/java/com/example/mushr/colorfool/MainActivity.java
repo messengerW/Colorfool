@@ -1,471 +1,175 @@
 package com.example.mushr.colorfool;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView imgSource1;
-    private TextView touchedXY, invertedXY, imgSize;
-    private Button colorBtn1, colorBtn2, colorBtn3, colorBtn4,
-                   colorBtn5, colorBtn6, colorBtn7, colorBtn8;
+    private Fragment1 f1;     // Fragment1 对象
+    private Fragment2 f2;     // Fragment2 对象
+    private Fragment3 f3;     // Fragment3 对象
+    private Fragment[] fragments;
+    private int lastShowFragment = 0;   // 表示最后一个显示的 Fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mainpage);
 
-        touchedXY = (TextView) findViewById(R.id.xy);
-        invertedXY = (TextView) findViewById(R.id.invertedxy);
-//        imgSize = (TextView) findViewById(R.id.size);
-        colorBtn1 = (Button) findViewById(R.id.btn1);
-        colorBtn2 = (Button) findViewById(R.id.btn3);
-        colorBtn3 = (Button) findViewById(R.id.btn4);
-        colorBtn4 = (Button) findViewById(R.id.btn2);
-        colorBtn5 = (Button) findViewById(R.id.btn5);
-        colorBtn6 = (Button) findViewById(R.id.btn7);
-        colorBtn7 = (Button) findViewById(R.id.btn8);
-        colorBtn8 = (Button) findViewById(R.id.btn6);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        imgSource1 = (ImageView) findViewById(R.id.pic);
-        imgSource1.setOnTouchListener(imgSourceOnTouchListener);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        //  获取侧拉抽屉
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_left);
+        navigationView.setItemIconTintList(null);       // 屏蔽图标自带颜色
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //  获取底部导航栏
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_bottom);
+        bottomNavigationView.setItemIconTintList(null);       // 屏蔽图标自带颜色
+        refreshItemIcon(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(ClickToChange);//点击事件
+        initFragments();
     }
 
-    int flag = 0;
-    View.OnTouchListener imgSourceOnTouchListener = new View.OnTouchListener() {
+    public void refreshItemIcon(BottomNavigationView bottomNavigationView) {
+        MenuItem item1 = bottomNavigationView.getMenu().findItem(R.id.item1);
+        item1.setIcon(R.drawable.ic_bottom_home1);
+        MenuItem item2 = bottomNavigationView.getMenu().findItem(R.id.item3);
+        item2.setIcon(R.drawable.ic_bottom_around1);
+    }
 
-        // 将 drawable 格式转化为 bitmap 格式
-        @NonNull
-        private Bitmap drawableToBitamp(@NonNull Drawable drawable) {
-            final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(bmp);
-            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            drawable.draw(canvas);
-            return bmp;
-        }
-
-        // 点击事件
+    private BottomNavigationView.OnNavigationItemSelectedListener ClickToChange
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
-        public boolean onTouch(View view, MotionEvent event) {
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            float eventX;
-            float eventY;
-            float[] eventXY = new float[]{0,0};
-            Matrix invertMatrix = new Matrix();
-            Drawable img;
-            Bitmap bitmap;
-
-            int x;
-            int y;
-            int touchedRGB;
-            int r,g,b;
-            String r1, g1, b1;
-            String strRGB;               //  获取到这一点颜色的RGB值
-
-            if (flag == 0)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn1.setBackgroundColor(touchedRGB);
-                colorBtn1.setText("#" + strRGB);
+            switch (item.getItemId()) {
+                case R.id.item1:
+                    if (lastShowFragment != 0) {
+                        item.setIcon(R.drawable.ic_bottom_home2);
+                        switchFragment(lastShowFragment, 0);
+                        lastShowFragment = 0;
+                    }
+                    return true;
+                case R.id.item2:
+                    if (lastShowFragment != 1) {
+                        item.setIcon(R.drawable.ic_bottom_add);
+                        switchFragment(lastShowFragment, 1);
+                        lastShowFragment = 1;
+                    }
+                    return true;
+                case R.id.item3:
+                    if (lastShowFragment != 2) {
+                        item.setIcon(R.drawable.ic_bottom_around2);
+                        switchFragment(lastShowFragment, 2);
+                        lastShowFragment = 2;
+                    }
+                    return true;
             }
-            else if (flag == 1)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn2.setBackgroundColor(touchedRGB);
-                colorBtn2.setText("#" + strRGB);
-            }
-            else if (flag == 2)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn3.setBackgroundColor(touchedRGB);
-                colorBtn3.setText("#" + strRGB);
-            }
-            else if (flag == 3)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn4.setBackgroundColor(touchedRGB);
-                colorBtn4.setText("#" + strRGB);
-            }
-            else if (flag == 4)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn5.setBackgroundColor(touchedRGB);
-                colorBtn5.setText("#" + strRGB);
-            }
-            else if (flag == 5)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn6.setBackgroundColor(touchedRGB);
-                colorBtn6.setText("#" + strRGB);
-            }
-            else if (flag == 6)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn7.setBackgroundColor(touchedRGB);
-                colorBtn7.setText("#" + strRGB);
-            }
-            else if (flag == 7)
-            {
-                eventX = event.getX();
-                eventY = event.getY();
-                eventXY[0] = eventX;
-                eventXY[1] = eventY;
-
-                ((ImageView) view).getImageMatrix().invert(invertMatrix);
-                invertMatrix.mapPoints(eventXY);
-
-                img = ((ImageView) view).getDrawable();
-                bitmap = drawableToBitamp(img);
-
-                x = (int) eventXY[0];
-                y = (int) eventXY[1];
-
-                touchedXY.setText(
-                        "touched position: "
-                                + String.valueOf(eventX) + " / "
-                                + String.valueOf(eventY));
-                invertedXY.setText(
-                        "touched position: "
-                                + String.valueOf(x) + " / "
-                                + String.valueOf(y));
-
-                // 坐标超出图片范围
-                if (x < 0) {
-                    x = 0;
-                } else if (x > bitmap.getWidth() - 1) {
-                    x = bitmap.getWidth() - 1;
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > bitmap.getHeight() - 1) {
-                    y = bitmap.getHeight() - 1;
-                }
-                touchedRGB = bitmap.getPixel(x, y);
-                r = Color.red(touchedRGB);
-                g = Color.green(touchedRGB);
-                b = Color.blue(touchedRGB);
-                r1 = Integer.toHexString(r);
-                g1 = Integer.toHexString(g);
-                b1 = Integer.toHexString(b);
-                strRGB = r1 + g1 + b1;
-                colorBtn8.setBackgroundColor(touchedRGB);
-                colorBtn8.setText("#" + strRGB);
-            }
-
-            flag = (flag+1)%8;
-
             return false;
         }
+
     };
 
+    public void switchFragment(int lastIndex, int index) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.hide(fragments[lastIndex]);
+        if (!fragments[index].isAdded()) {
+            transaction.add(R.id.fm_container, fragments[index]);
+        }
+        transaction.show(fragments[index]).commitAllowingStateLoss();
+    }
 
+    private void initFragments() {
+        f1 = new Fragment1();
+        f2 = new Fragment2();
+        f3 = new Fragment3();
+        fragments = new Fragment[]{f1, f2, f3};
+        lastShowFragment = 0;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fm_container, f1)
+                .show(f1)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_more, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*** 侧拉抽屉，可为每个按钮增加点击事件 ***/
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle main_bottom_navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_1) {
+            // Handle the camera action
+        } else if (id == R.id.nav_2) {
+
+        } else if (id == R.id.nav_3) {
+
+        } else if (id == R.id.nav_4) {
+
+        } else if (id == R.id.nav_5) {
+
+        } else if (id == R.id.nav_6) {
+
+        } else if (id == R.id.nav_7) {
+//            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//            startActivity(intent);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
