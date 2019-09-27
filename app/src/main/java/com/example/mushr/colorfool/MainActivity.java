@@ -28,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
         touchedXY = (TextView) findViewById(R.id.xy);
         invertedXY = (TextView) findViewById(R.id.invertedxy);
-        imgSize = (TextView) findViewById(R.id.size);
+//        imgSize = (TextView) findViewById(R.id.size);
         colorBtn1 = (Button) findViewById(R.id.btn1);
-        colorBtn2 = (Button) findViewById(R.id.btn2);
-        colorBtn3 = (Button) findViewById(R.id.btn3);
-        colorBtn4 = (Button) findViewById(R.id.btn4);
+        colorBtn2 = (Button) findViewById(R.id.btn3);
+        colorBtn3 = (Button) findViewById(R.id.btn4);
+        colorBtn4 = (Button) findViewById(R.id.btn2);
         colorBtn5 = (Button) findViewById(R.id.btn5);
-        colorBtn6 = (Button) findViewById(R.id.btn6);
-        colorBtn7 = (Button) findViewById(R.id.btn7);
-        colorBtn8 = (Button) findViewById(R.id.btn8);
+        colorBtn6 = (Button) findViewById(R.id.btn7);
+        colorBtn7 = (Button) findViewById(R.id.btn8);
+        colorBtn8 = (Button) findViewById(R.id.btn6);
 
         imgSource1 = (ImageView) findViewById(R.id.pic);
         imgSource1.setOnTouchListener(imgSourceOnTouchListener);
@@ -83,11 +83,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -122,11 +131,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -161,11 +179,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -200,11 +227,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -239,11 +275,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -278,11 +323,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -317,11 +371,23 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
+                ((ImageView) view).getImageMatrix().invert(invertMatrix);
+                invertMatrix.mapPoints(eventXY);
 
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {
@@ -356,11 +422,20 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView) view).getImageMatrix().invert(invertMatrix);
                 invertMatrix.mapPoints(eventXY);
 
-                x = Integer.valueOf((int) eventXY[0]);
-                y = Integer.valueOf((int) eventXY[1]);
-
                 img = ((ImageView) view).getDrawable();
                 bitmap = drawableToBitamp(img);
+
+                x = (int) eventXY[0];
+                y = (int) eventXY[1];
+
+                touchedXY.setText(
+                        "touched position: "
+                                + String.valueOf(eventX) + " / "
+                                + String.valueOf(eventY));
+                invertedXY.setText(
+                        "touched position: "
+                                + String.valueOf(x) + " / "
+                                + String.valueOf(y));
 
                 // 坐标超出图片范围
                 if (x < 0) {

@@ -2,8 +2,66 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#E91E63</color>
-    <color name="color1">#8BC34A</color>
-    <color name="color2">#2196F3</color>
-    <color name="color3">#FF5722</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!--以下是常用颜色，你们没事多补充补充!!!-->
+
+    <color name="cg_0">#a9ffa9</color>
+    <color name="cg_1">#00FF00</color>
+    <color name="cg_2">#00CC00</color>
+    <color name="cg_3">#009900</color>
+    <color name="cg_4">#339900</color>
+    <color name="cg_5">#006600</color>
+
+    <color name="cb_0">#70f4e7</color>
+    <color name="cb_1">#66CCFF</color>
+    <color name="cb_2">#6b90ff</color>
+    <color name="cb_3">#3333FF</color>
+    <color name="cb_4">#3300CC</color>
+    <color name="cb_5">#000099</color>
+    <color name="cb_6">#bbfffa</color>
+    <color name="cb_7">#a7fff4</color>
+
+    <color name="cp_1">#ff9bcd</color>
+    <color name="cp_2">#fa8ff7</color>
+    <color name="cp_3">#DB45A8</color>
+
+    <color name="cr_1">#FF3333</color>
+    <color name="cr_2">#FF3300</color>
+    <color name="cr_3">#FF0000</color>
+    <color name="cr_4">#CC0000</color>
+    <color name="cr_5">#990000</color>
+
+    <color name="cy_0">#a6d743</color>
+    <color name="cy_1">#CCFF66</color>
+    <color name="cy_2">#FFFF99</color>
+    <color name="cy_3">#FFFF66</color>
+    <color name="cy_4">#FFFF33</color>
+    <color name="cy_5">#FFFF00</color>
+    <color name="cy_6">#ffe5ac</color>
+
+    <color name="cw_0">#cccccc</color>
+    <color name="cw_1">#FFFFFF</color>
+    <color name="cw_2">#FFFAFA</color>
+    <color name="cw_3">#FFF5EE</color>
+    <color name="cw_4">#C0C0C0</color>
+    <color name="cw_5">#696969</color>
+    <color name="cw_6">#4b4949</color>
+    <color name="cw_7">#464242</color>
+
+    <color name="cbl_0">#000000</color>
+
+    <!-- 以下是字体颜色 & 分割线颜色 -->
+
+    <color name="word_0">#1b1b1b</color>
+    <color name="word_1">#888888</color>
+    <color name="word_2">#333333</color>
+
+    <color name="line_0">#EEEEEE</color>
+
+
+    <drawable name="checkbox">#666666</drawable>
+    <drawable name="camera_back_press">#1b1b1b</drawable>
+    <drawable name="camera_back_default">#2f2f2f</drawable>
+
 </resources>
