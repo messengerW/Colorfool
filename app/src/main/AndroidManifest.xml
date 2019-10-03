@@ -27,11 +27,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainActivity1"
-            android:label="@string/app_name"
-            >
-        </activity>
     </application>
 
 </manifest>

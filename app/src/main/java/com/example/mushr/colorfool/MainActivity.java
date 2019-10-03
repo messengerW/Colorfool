@@ -1,6 +1,5 @@
 package com.example.mushr.colorfool;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -13,10 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment2 f2;     // Fragment2 对象
     private Fragment3 f3;     // Fragment3 对象
     private Fragment[] fragments;
-    private int lastShowFragment = 0;   // 表示最后一个显示的 Fragment
+    private int momentFragment = 0;   // 表示最后一个显示的 Fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,43 +69,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //  获取底部导航栏
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_bottom);
         bottomNavigationView.setItemIconTintList(null);       // 屏蔽图标自带颜色
-        refreshItemIcon(bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(ClickToChange);//点击事件
         initFragments();
+        //  默认显示 fragment1
+        bottomNavigationView.getMenu().findItem(R.id.item1).setIcon(R.drawable.ic_bottom_home2);
+        bottomNavigationView.setOnNavigationItemSelectedListener(ClickToChange);//点击事件
     }
 
-    public void refreshItemIcon(BottomNavigationView bottomNavigationView) {
+    public void initItemIcon(BottomNavigationView bottomNavigationView) {
         MenuItem item1 = bottomNavigationView.getMenu().findItem(R.id.item1);
         item1.setIcon(R.drawable.ic_bottom_home1);
-        MenuItem item2 = bottomNavigationView.getMenu().findItem(R.id.item3);
-        item2.setIcon(R.drawable.ic_bottom_around1);
+        MenuItem item2 = bottomNavigationView.getMenu().findItem(R.id.item2);
+        item2.setIcon(R.drawable.ic_bottom_add1);
+        MenuItem item3 = bottomNavigationView.getMenu().findItem(R.id.item3);
+        item3.setIcon(R.drawable.ic_bottom_around1);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener ClickToChange
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_bottom);
             switch (item.getItemId()) {
                 case R.id.item1:
-                    if (lastShowFragment != 0) {
+                    //  每次更换Fragment时都要先重置底部 3个 icon 为默认图标
+                    initItemIcon(bottomNavigationView);
+                    if (momentFragment != 0) {
                         item.setIcon(R.drawable.ic_bottom_home2);
-                        switchFragment(lastShowFragment, 0);
-                        lastShowFragment = 0;
+                        changeFragment(momentFragment, 0);
+                        momentFragment = 0;
                     }
                     return true;
                 case R.id.item2:
-                    if (lastShowFragment != 1) {
-                        item.setIcon(R.drawable.ic_bottom_add);
-                        switchFragment(lastShowFragment, 1);
-                        lastShowFragment = 1;
+                    //  每次更换Fragment时都要先重置底部 3个 icon 为默认图标
+                    initItemIcon(bottomNavigationView);
+                    if (momentFragment != 1) {
+                        item.setIcon(R.drawable.ic_bottom_add2);
+                        changeFragment(momentFragment, 1);
+                        momentFragment = 1;
                     }
                     return true;
                 case R.id.item3:
-                    if (lastShowFragment != 2) {
+                    //  每次更换Fragment时都要先重置底部 3个 icon 为默认图标
+                    initItemIcon(bottomNavigationView);
+                    if (momentFragment != 2) {
                         item.setIcon(R.drawable.ic_bottom_around2);
-                        switchFragment(lastShowFragment, 2);
-                        lastShowFragment = 2;
+                        changeFragment(momentFragment, 2);
+                        momentFragment = 2;
                     }
                     return true;
             }
@@ -117,13 +123,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     };
 
-    public void switchFragment(int lastIndex, int index) {
+    public void changeFragment(int lastFragment, int nextFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.hide(fragments[lastIndex]);
-        if (!fragments[index].isAdded()) {
-            transaction.add(R.id.fm_container, fragments[index]);
+        transaction.hide(fragments[lastFragment]);
+        if (!fragments[nextFragment].isAdded()) {
+            transaction.add(R.id.fm_container, fragments[nextFragment]);
         }
-        transaction.show(fragments[index]).commitAllowingStateLoss();
+        transaction.show(fragments[nextFragment]).commitAllowingStateLoss();
     }
 
     private void initFragments() {
@@ -131,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         f2 = new Fragment2();
         f3 = new Fragment3();
         fragments = new Fragment[]{f1, f2, f3};
-        lastShowFragment = 0;
+        momentFragment = 0;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fm_container, f1)
