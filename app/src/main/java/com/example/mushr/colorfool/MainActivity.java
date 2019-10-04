@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,12 +43,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(ClickToChange);//点击事件
     }
 
+    //  初始化底部 3 个 icon
     public void initItemIcon(BottomNavigationView bottomNavigationView) {
         MenuItem item1 = bottomNavigationView.getMenu().findItem(R.id.item1);
         item1.setIcon(R.drawable.ic_bottom_home1);
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         item3.setIcon(R.drawable.ic_bottom_around1);
     }
 
+    //  底部导航栏的点击事件，点击可以切换 Fragment
     private BottomNavigationView.OnNavigationItemSelectedListener ClickToChange
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.show(fragments[nextFragment]).commitAllowingStateLoss();
     }
 
+    //  Fragment初始化函数，默认首先显示 fragment1
     private void initFragments() {
         f1 = new Fragment1();
         f2 = new Fragment2();
@@ -181,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onMenuOpened(featureId, menu);
     }
 
+    /*处理右上溢出菜单中菜单项的点击事件*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

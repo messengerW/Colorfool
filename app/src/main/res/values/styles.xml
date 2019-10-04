@@ -10,6 +10,10 @@
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
     </style>
 
+    <style name="TranslucentTheme" parent="AppTheme">
+        <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
+    </style>
+
     <style name="AppTheme.ToolBar" parent="Widget.AppCompat.PopupMenu.Overflow">
         <!--是否覆盖toolbar-->
         <item name="overlapAnchor">false</item>
