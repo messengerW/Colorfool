@@ -25,10 +25,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/head_image_height">
-
         </FrameLayout>
 
+
     </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/BottomfloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation_bottom"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_bottom_add"
+        android:backgroundTint="#ffffff"
+        app:maxImageSize="58dp"
+        app:borderWidth="0dp"/>
 
     <!--这个是底部导航栏，用的是Android原生控件-->
     <android.support.design.widget.BottomNavigationView

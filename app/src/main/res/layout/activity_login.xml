@@ -136,7 +136,7 @@
         android:layout_below="@id/cb_checkbox"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/shape_of_button"
+        android:background="@drawable/shape_of_login_button"
         android:gravity="center"
         android:padding="10dp"
         android:text="登录"

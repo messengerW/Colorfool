@@ -1,9 +1,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
+    <!-- 設置顶部导航栏渐变色 -->
     <gradient
         android:angle="135"
-        android:endColor="#508eff"
-        android:centerColor="#35b1fd"
-        android:startColor="#65ccff"
+        android:endColor="#DD4A89"
+        android:centerColor="#EC51A1"
+        android:startColor="#EE81DC"
         android:type="linear" />
 </shape>
