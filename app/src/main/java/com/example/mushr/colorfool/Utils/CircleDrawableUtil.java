@@ -1,4 +1,4 @@
-package com.example.mushr.colorfool;
+package com.example.mushr.colorfool.Utils;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,7 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 
-public class CircleDrawable extends Drawable {
+public class CircleDrawableUtil extends Drawable {
 
     private Bitmap bitmap;
 
@@ -30,7 +30,7 @@ public class CircleDrawable extends Drawable {
     // 半径
     private float radius;
 
-    public CircleDrawable(Drawable drawable, Context context, int size) {
+    public CircleDrawableUtil(Drawable drawable, Context context, int size) {
         size = dip2px(context, size);
         drawable = zoomDrawable(drawable, dip2px(context, size), dip2px(context, size));
         this.bitmap = drawableToBitmap(drawable);

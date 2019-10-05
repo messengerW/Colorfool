@@ -1,4 +1,4 @@
-package com.example.mushr.colorfool;
+package com.example.mushr.colorfool.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.mushr.colorfool.R;
 import com.example.mushr.colorfool.Utils.StatusBarUtil;
 
 public class LoginActivity extends AppCompatActivity {

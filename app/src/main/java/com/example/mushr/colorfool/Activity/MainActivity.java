@@ -1,11 +1,9 @@
-package com.example.mushr.colorfool;
+package com.example.mushr.colorfool.Activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.mushr.colorfool.Utils.CircleDrawableUtil;
+import com.example.mushr.colorfool.Fragment1;
+import com.example.mushr.colorfool.Fragment2;
+import com.example.mushr.colorfool.F3.Fragment3;
+import com.example.mushr.colorfool.R;
+import com.example.mushr.colorfool.Utils.StatusBarUtil;
 
 import java.lang.reflect.Method;
 
@@ -44,13 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.mainpage);
 
         /*沉浸式状态栏*/
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+        StatusBarUtil.setStatusBar(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.addDrawerListener(toggle);
 
-        //  自定义toolbar左侧头像按钮样式，用到了 CircleDrawable 类
+        //  自定义toolbar左侧头像按钮样式，用到了 CircleDrawableUtil 类
         Resources resources = MainActivity.this.getResources();
         Drawable drawable = resources.getDrawable(R.drawable.ic_nav_head);
         int size = 42;
-        CircleDrawable circleDrawable = new CircleDrawable(drawable,MainActivity.this,size);
-        toolbar.setNavigationIcon(circleDrawable);
+        CircleDrawableUtil circleDrawableUtil = new CircleDrawableUtil(drawable,MainActivity.this,size);
+        toolbar.setNavigationIcon(circleDrawableUtil);
 
         //  获取侧拉抽屉
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_left);

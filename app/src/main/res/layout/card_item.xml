@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="248dp"
+        android:clickable="true"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/card_pic"
+                android:layout_width="350dp"
+                android:layout_height="210dp"
+                android:background="@mipmap/ic_pic1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/card_btn_star"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/ic_drawer_star"
+                android:scaleType="center"
+                app:layout_constraintLeft_toRightOf="@id/card_pic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/card_btn_love"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_love"
+                app:layout_constraintLeft_toRightOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@+id/card_btn_star" />
+
+            <TextView
+                android:id="@+id/card_text"
+                android:layout_width="48dp"
+                android:layout_height="30dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_btn_love" />
+
+            <Button
+                android:id="@+id/card_colorbtn1"
+                style="@style/CardColorButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@id/card_pic" />
+
+            <Button
+                android:id="@+id/card_colorbtn2"
+                style="@style/CardColorButton"
+                android:layout_marginLeft="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@id/card_pic" />
+
+            <Button
+                android:id="@+id/card_colorbtn3"
+                style="@style/CardColorButton"
+                android:layout_marginLeft="120dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@id/card_pic" />
+
+            <Button
+                android:id="@+id/card_colorbtn4"
+                style="@style/CardColorButton"
+                android:layout_marginLeft="180dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@id/card_pic" />
+
+            <Button
+                android:id="@+id/card_colorbtn5"
+                style="@style/CardColorButton"
+                android:layout_marginLeft="240dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@id/card_pic" />
+
+            <Button
+                android:id="@+id/card_colorbtn6"
+                style="@style/CardColorButton"
+                android:layout_marginLeft="300dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/card_pic"
+                app:layout_constraintTop_toBottomOf="@id/card_pic" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

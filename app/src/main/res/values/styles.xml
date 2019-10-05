@@ -56,4 +56,10 @@
         <item name="android:background">@drawable/shape_of_color_button</item>
     </style>
 
+    <style name="CardColorButton" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">#f0ff0f</item>
+    </style>
+
 </resources>

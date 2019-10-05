@@ -1,6 +1,7 @@
 package com.example.mushr.colorfool.Utils;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.v4.graphics.ColorUtils;
@@ -16,8 +17,27 @@ import android.view.WindowManager;
  */
 public class StatusBarUtil {
 
-    /**
-     * Android 6.0 以上设置状态栏颜色
+
+    /*  一个参数的方法，适用于带有 toolbar 的 page
+     * 根据顶部toolbar颜色，为状态栏设置渐变色
+     *
+     */
+    public static void setStatusBar(Activity activity){
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = activity.getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+
+    /* 两个参数的方法，适用于顶部没有 toolbar 的 page
+     * 根据顶部颜色设置状态栏底色、文字颜色。
+     * @param color
+     * @param activity
+     * 有待改进，传过来的这个color默认是白色，据此设置的状态栏颜色只能是几种固定的颜色，纯白、纯黑、纯黄色等
      */
     public static void setStatusBar(Activity activity, @ColorInt int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -1,7 +1,6 @@
-package com.example.mushr.colorfool;
+package com.example.mushr.colorfool.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.mushr.colorfool.R;
 import com.example.mushr.colorfool.Utils.StatusBarUtil;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -29,6 +29,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        StatusBarUtil.setStatusBar(this, Color.WHITE);
+        StatusBarUtil.setStatusBar(this);
     }
 }
