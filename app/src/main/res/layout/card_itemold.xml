@@ -47,7 +47,7 @@
                 android:id="@+id/card_btn_love"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/card_love"
+                android:background="@drawable/card_love1"
                 app:layout_constraintRight_toLeftOf="@id/card_btn_star"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />

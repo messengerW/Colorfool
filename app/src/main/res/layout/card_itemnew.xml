@@ -57,7 +57,7 @@
                 android:layout_height="36dp"
                 android:layout_marginLeft="10dp"
 
-                android:background="@drawable/card_love"
+                android:background="@drawable/click_love_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/card_app" />
 
@@ -67,7 +67,7 @@
                 android:layout_height="36dp"
                 android:layout_marginLeft="10dp"
 
-                android:background="@drawable/card_star"
+                android:background="@drawable/click_star_button"
                 android:scaleType="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/card_btn_love" />

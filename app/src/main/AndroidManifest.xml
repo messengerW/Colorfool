@@ -37,9 +37,17 @@
             android:label="">
 
         </activity>
+
         <!--设置界面-->
         <activity
             android:name=".Activity.SettingsActivity"
+            android:label="">
+
+        </activity>
+
+        <!--图片详细信息界面-->
+        <activity
+            android:name=".Activity.PictureInfoActivity"
             android:label="">
 
         </activity>
