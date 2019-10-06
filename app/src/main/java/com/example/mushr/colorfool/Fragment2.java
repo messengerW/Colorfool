@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -48,12 +49,16 @@ public class Fragment2 extends Fragment {
 
         // 将 drawable 格式转化为 bitmap 格式
         @NonNull
-        private Bitmap DrawableToBitamp(@NonNull Drawable drawable) {
-            final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(bmp);
-            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        private Bitmap DrawableToBitmap(@NonNull Drawable drawable) {
+            int width = drawable.getIntrinsicWidth();
+            int height = drawable.getIntrinsicHeight();
+            Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                    : Bitmap.Config.RGB_565;
+            Bitmap bitmap = Bitmap.createBitmap(width, height, config);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, width, height);
             drawable.draw(canvas);
-            return bmp;
+            return bitmap;
         }
 
         /*
@@ -73,7 +78,7 @@ public class Fragment2 extends Fragment {
             invertMatrix.mapPoints(eventXY);
 
             Drawable img = ((ImageView) view).getDrawable();
-            Bitmap bitmap = DrawableToBitamp(img);
+            Bitmap bitmap = DrawableToBitmap(img);
 
             int x = (int) eventXY[0];
             int y = (int) eventXY[1];

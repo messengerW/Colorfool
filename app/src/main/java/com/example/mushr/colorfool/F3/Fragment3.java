@@ -1,13 +1,18 @@
 package com.example.mushr.colorfool.F3;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.ImageButton;
 
 import com.example.mushr.colorfool.R;
 
@@ -47,6 +52,9 @@ public class Fragment3 extends Fragment {
     private void initRecyclerView(){
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
         adapter = new CardAdapter(getActivity(),ItemList);
+
+
+
         recyclerView.setAdapter(adapter);
         //  设置recycler的样式
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));

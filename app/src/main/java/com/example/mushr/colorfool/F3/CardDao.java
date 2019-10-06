@@ -40,17 +40,21 @@ public class CardDao {
                     //  实例化一个bean，也就是VO
                     CardBean bean = new CardBean();
 
-                    String imageId = cursor.getString(cursor.getColumnIndex("imageID"));
-                    String userId = cursor.getString(cursor.getColumnIndex("userID"));
+                    String imageId = cursor.getString(cursor.getColumnIndex("imageId"));
+                    String userId = cursor.getString(cursor.getColumnIndex("userId"));
                     String userName = cursor.getString(cursor.getColumnIndex("userName"));
 //                  // picture
-                    byte[] pic = cursor.getBlob(cursor.getColumnIndex("image"));
-                    ByteArrayInputStream bin = new ByteArrayInputStream(pic);
+                    byte[] pic1 = cursor.getBlob(cursor.getColumnIndex("image"));
+                    ByteArrayInputStream bin1 = new ByteArrayInputStream(pic1);
+                    // userhead
+                    byte[] pic2 = cursor.getBlob(cursor.getColumnIndex("userHead"));
+                    ByteArrayInputStream bin2 = new ByteArrayInputStream(pic2);
 
-                    bean.setImage(Drawable.createFromStream(bin, "pic"));
                     bean.setImageId(imageId);
                     bean.setUserId(userId);
                     bean.setUserName(userName);
+                    bean.setImage(Drawable.createFromStream(bin1, "pic1"));
+                    bean.setUserHead(Drawable.createFromStream(bin2, "pic2"));
 
                     itemList.add(bean);
 

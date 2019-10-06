@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.example.mushr.colorfool.Utils.CircleDrawableUtil;
+import com.example.mushr.colorfool.Utils.CustomDrawableUtil;
 import com.example.mushr.colorfool.Fragment1;
 import com.example.mushr.colorfool.Fragment2;
 import com.example.mushr.colorfool.F3.Fragment3;
@@ -61,12 +61,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.addDrawerListener(toggle);
 
-        //  自定义toolbar左侧头像按钮样式，用到了 CircleDrawableUtil 类
+        /*
+         * 自定义toolbar左侧头像按钮样式，将其设置为比较流行的圆形头像按钮，
+         * 用到了 CustomDrawableUtil 类
+         */
         Resources resources = MainActivity.this.getResources();
         Drawable drawable = resources.getDrawable(R.drawable.ic_nav_head);
         int size = 42;
-        CircleDrawableUtil circleDrawableUtil = new CircleDrawableUtil(drawable,MainActivity.this,size);
-        toolbar.setNavigationIcon(circleDrawableUtil);
+        CustomDrawableUtil customDrawableUtil = new CustomDrawableUtil(drawable,MainActivity.this,size);
+        toolbar.setNavigationIcon(customDrawableUtil);
 
         //  获取侧拉抽屉
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_left);

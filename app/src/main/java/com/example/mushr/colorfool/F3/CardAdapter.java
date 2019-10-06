@@ -6,11 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mushr.colorfool.Activity.SettingsActivity;
 import com.example.mushr.colorfool.R;
+import com.example.mushr.colorfool.Utils.CustomDrawableUtil;
 
 import java.util.ArrayList;
 
@@ -35,6 +37,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.myViewHolder> 
         private ImageView image;
         private TextView userId;
         private TextView userName;
+        private ImageButton userHead;
 
         public myViewHolder(View itemView) {
             super(itemView);
@@ -42,6 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.myViewHolder> 
 //            imageId = (TextView) itemView.findViewById();
             userName = (TextView) itemView.findViewById(R.id.card_text);
 //            userId = (TextView) itemView.findViewById();
+            userHead = (ImageButton) itemView.findViewById(R.id.card_head);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,5 +73,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.myViewHolder> 
         holder.image.setImageDrawable(bean.image);
 //        holder.userId.setText(bean.userId);
         holder.userName.setText(bean.userName);
+        holder.userHead.setBackground(CustomDrawableUtil.getRoundedBitmapDrawable(context,bean.userHead));
     }
 }
