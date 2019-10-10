@@ -2,10 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 图片轮播 -->
     <FrameLayout
         android:id="@+id/lunbo"
         android:layout_width="match_parent"
-        android:layout_height="220dp">
+        android:layout_height="225dp">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_lunbo"
@@ -14,9 +15,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_gravity="bottom"
-            android:background="#33000000"
+            android:background="#00000000"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -40,5 +41,25 @@
 
         </LinearLayout>
     </FrameLayout>
+
+    <!-- 瀑布流卡片布局 -->
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lunbo">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
 
 </RelativeLayout>

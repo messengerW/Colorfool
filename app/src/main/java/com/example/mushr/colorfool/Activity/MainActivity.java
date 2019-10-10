@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.mushr.colorfool.Utils.CustomDrawableUtil;
-import com.example.mushr.colorfool.Fragment1;
+import com.example.mushr.colorfool.F1.Fragment1;
 import com.example.mushr.colorfool.Fragment2;
 import com.example.mushr.colorfool.F3.Fragment3;
 import com.example.mushr.colorfool.R;
