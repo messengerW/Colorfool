@@ -65,6 +65,7 @@ public class Fragment1 extends Fragment {
     }
 
     /*** Begin---图片轮播 ***/
+    //  有改进！433当时用的是viewpager，这个banner更加简单好用
     private void initView() {
 
         //设置banner样式,默认为:Banner.NOT_INDICATOR(不显示指示器和标题)
