@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.mushr.colorfool.Utils.CustomDrawableUtil;
@@ -37,11 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment3 f3;     // Fragment3 对象
     private Fragment[] fragments;
     private int momentFragment = 0;   // 表示最后一个显示的 Fragment
-
     private ImageButton imageButton;
-    private Button button;
-    private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,15 +63,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Resources resources = MainActivity.this.getResources();
         Drawable drawable = resources.getDrawable(R.drawable.ic_nav_head);
         int size = 42;
-        CustomDrawableUtil customDrawableUtil = new CustomDrawableUtil(drawable,MainActivity.this,size);
+        CustomDrawableUtil customDrawableUtil = new CustomDrawableUtil(drawable, MainActivity.this, size);
         toolbar.setNavigationIcon(customDrawableUtil);
 
         //  获取侧拉抽屉
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_left);
         //  屏蔽图标自带颜色
         navigationView.setItemIconTintList(null);
-        //  为抽屉中按钮添加点击事件
+        //  为抽屉中的 item 添加“选定事件”，我想，和onClick还是有所不同的吧，不然为什么这样命名
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        //  为抽屉顶部头像按钮添加点击事件，点击可以跳转到个人信息页面，之前我放在抽屉的点击事件里，
+        //  结果放在一起有bug，每次打开抽屉第一次点击头像时无法跳转，必须先点一个下面的任意按钮，然后
+        //  再打开抽屉点击头像才会跳转
+        //  我tmd奇了怪了，为啥别的view就可以获取到，就这个图片按钮获取不到呢??一直报空指针.
+        //  没办法是能先放在抽屉的点击事件里面了。
+//        ImageButton imageButton = (ImageButton) findViewById(R.id.imagebutton_info);
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
         //  获取底部导航栏
@@ -86,8 +101,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //  初始化三个 fragment，并默认显示 fragment1
         initFragments();
         bottomNavigationView.getMenu().findItem(R.id.item1).setIcon(R.drawable.ic_bottom_home2);
-        //  为底部导航栏按钮添加点击事件
+        //  为底部导航栏按钮添加 初次点击事件，点击选择更换 Fragment
         bottomNavigationView.setOnNavigationItemSelectedListener(ClickToChange);
+        //  为底部导航栏按钮添加 重复点击事件，我理解的就是：
+        //  当前已经在展示这个Fragment了，这时如果再次点击Fragment对应的按钮(item)时，触发此事件
+        //  bottomNavigationView.setOnNavigationItemReselectedListener(...);
     }
 
     /*** 处理右上溢出菜单中菜单项的点击事件 ***/
@@ -107,11 +125,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    /*** 侧拉抽屉，可为每个按钮增加点击事件 ***/
+    /*** 侧拉抽屉，可为每个item按钮增加点击事件 ***/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle main_bottom_navigation view item clicks here.
+        //  这样就不难理解了，顶部头像按钮的点击事件写在这里的话就一定会出现那个问题了——必须要先点击一下下面的
+        //  任意一个 item，然后再打开抽屉点击头像按钮才会实现跳转。
         imageButton = (ImageButton) findViewById(R.id.imagebutton_info);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
-
+        // Handle main_bottom_navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_1) {
             // Handle the camera action
@@ -133,8 +152,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_5) {
 
         } else if (id == R.id.nav_6) {
-
-        } else if (id == R.id.nav_7) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         }
@@ -149,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            //这里是因为需要重置底部icon，所以声明一个控件找到底部导航栏
             BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_bottom);
             switch (item.getItemId()) {
                 case R.id.item1:
@@ -236,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * 解决Toolbar中Menu无法同时显示图标和文字的问题
-     * */
+     */
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (menu != null) {
